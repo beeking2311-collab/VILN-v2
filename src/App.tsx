@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { motion, useMotionValue, useScroll, useTransform, type MotionValue } from 'framer-motion'
 import { ArrowUpRight, MoveUpRight } from 'lucide-react'
 
-const portraitUrl = 'https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png'
+const heroVideoUrl = '/manus-storage/kling_20261009_VIDEO_show_the_f_1724_0_6f416cde.mp4'
 
 const marqueeImages = [
   'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
@@ -185,38 +185,109 @@ function AnimatedText({ text, className = 'text-[#D7E2EA]', progress, revealRang
   )
 }
 
-function HeroSection() {
+function ScrollGlyph({ char, index, total, progress, typeRange, eraseRange, className = '' }: { char: string; index: number; total: number; progress: MotionValue<number>; typeRange: [number, number]; eraseRange?: [number, number]; className?: string }) {
+  const typeStart = typeRange[0] + ((typeRange[1] - typeRange[0]) * index) / total
+  const typeEnd = typeRange[0] + ((typeRange[1] - typeRange[0]) * (index + 1)) / total
+  const eraseStart = eraseRange ? eraseRange[0] + ((eraseRange[1] - eraseRange[0]) * (total - index - 1)) / total : undefined
+  const eraseEnd = eraseRange ? eraseRange[0] + ((eraseRange[1] - eraseRange[0]) * (total - index)) / total : undefined
+  const inputRange = eraseStart !== undefined && eraseEnd !== undefined ? [typeStart, typeEnd, eraseStart, eraseEnd] : [typeStart, typeEnd]
+  const outputRange = eraseStart !== undefined && eraseEnd !== undefined ? [0, 1, 1, 0] : [0, 1]
+  const opacity = useTransform(progress, inputRange, outputRange)
+  const y = useTransform(progress, [typeStart, typeEnd], [12, 0])
+  const display = char === ' ' ? '\u00a0' : char
+
   return (
-    <section className="relative flex min-h-screen flex-col overflow-x-clip bg-[#0C0C0C]" aria-label="Hero">
-      <FadeIn className="relative z-20 flex items-center justify-between gap-5 px-6 pt-6 text-sm font-medium uppercase tracking-wider text-[#D7E2EA] md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]" y={-20}>
-        <a href="#about" className="transition-opacity duration-200 hover:opacity-70">About</a>
-        <a href="#services" className="transition-opacity duration-200 hover:opacity-70">weapons</a>
-        <a href="#projects" className="transition-opacity duration-200 hover:opacity-70">Projects</a>
-        <a href="#contact" className="transition-opacity duration-200 hover:opacity-70">Contact</a>
-      </FadeIn>
+    <span className="relative inline-block">
+      <span className="invisible">{display}</span>
+      <motion.span className={`absolute inset-0 ${className}`} style={{ opacity, y }} aria-hidden="true">{display}</motion.span>
+    </span>
+  )
+}
 
-      <div className="relative z-0 mt-8 overflow-hidden sm:mt-6 md:mt-5">
-        <FadeIn delay={0.15} y={40}>
-          <h1 className="w-full whitespace-normal text-[clamp(4rem,10.6vw,160px)] font-black uppercase leading-[0.78] tracking-tight">
-            <span className="hero-heading block">Hi, we are</span>
-            <span className="viln-lockup block text-[1.18em]">VILN®</span>
+function ScrollTypedLine({ text, progress, typeRange, eraseRange, className = '' }: { text: string; progress: MotionValue<number>; typeRange: [number, number]; eraseRange?: [number, number]; className?: string }) {
+  return (
+    <span className="block whitespace-pre">
+      {text.split('').map((char, index) => <ScrollGlyph key={`${char}-${index}`} char={char} index={index} total={text.length} progress={progress} typeRange={typeRange} eraseRange={eraseRange} className={className} />)}
+    </span>
+  )
+}
+
+const lerp = (from: number, to: number, amount: number) => from + (to - from) * Math.min(1, Math.max(0, amount))
+
+function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const scrollProgress = useMotionValue(0)
+
+  useEffect(() => {
+    const syncVideo = (value: number) => {
+      const video = videoRef.current
+      if (!video || video.readyState < 1) return
+      const videoTime = value < 0.18
+        ? lerp(0.1, 0.9, value / 0.18)
+        : value < 0.38
+          ? lerp(0.9, 2.2, (value - 0.18) / 0.2)
+          : value < 0.5
+            ? lerp(2.2, 3, (value - 0.38) / 0.12)
+            : value < 0.64
+              ? lerp(3, 5.2, (value - 0.5) / 0.14)
+              : value < 0.83
+                ? lerp(5.2, 6.5, (value - 0.64) / 0.19)
+                : 6.5
+      video.pause()
+      if (Math.abs(video.currentTime - videoTime) > 0.015) video.currentTime = videoTime
+    }
+
+    const updateProgress = () => {
+      const rect = sectionRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const range = Math.max(1, rect.height - window.innerHeight)
+      const value = Math.min(1, Math.max(0, -rect.top / range))
+      scrollProgress.set(value)
+      syncVideo(value)
+    }
+
+    const video = videoRef.current
+    const onMetadata = () => syncVideo(scrollProgress.get())
+    video?.addEventListener('loadedmetadata', onMetadata)
+    updateProgress()
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    window.addEventListener('resize', updateProgress)
+    return () => {
+      video?.removeEventListener('loadedmetadata', onMetadata)
+      window.removeEventListener('scroll', updateProgress)
+      window.removeEventListener('resize', updateProgress)
+    }
+  }, [scrollProgress])
+
+  const supportOpacity = useTransform(scrollProgress, [0.12, 0.24, 0.34], [1, 1, 0])
+
+  return (
+    <section ref={sectionRef} className="relative h-[520vh] bg-[#0C0C0C]" aria-label="Pinned VILN hero sequence">
+      <div className="sticky top-0 h-screen overflow-hidden bg-[#0C0C0C]">
+        <video ref={videoRef} className="absolute inset-0 h-full w-full object-contain" muted playsInline preload="auto" aria-label="VILN character expression and mask sequence">
+          <source src={heroVideoUrl} type="video/mp4" />
+        </video>
+
+        <FadeIn className="relative z-30 flex items-center justify-between gap-5 px-6 pt-6 text-sm font-medium uppercase tracking-wider text-[#D7E2EA] md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]" y={-20}>
+          <a href="#about" className="transition-opacity duration-200 hover:opacity-70">About</a>
+          <a href="#services" className="transition-opacity duration-200 hover:opacity-70">weapons</a>
+          <a href="#projects" className="transition-opacity duration-200 hover:opacity-70">Projects</a>
+          <a href="#contact" className="transition-opacity duration-200 hover:opacity-70">Contact</a>
+        </FadeIn>
+
+        <div className="pointer-events-none absolute left-5 right-5 top-[23%] z-20 md:left-10 md:top-[20%]">
+          <h1 className="text-[clamp(3.4rem,8.8vw,132px)] font-black uppercase leading-[0.82] tracking-tight">
+            <ScrollTypedLine text="HI, WE ARE" progress={scrollProgress} typeRange={[0.05, 0.18]} className="hero-heading" />
+            <ScrollTypedLine text="A WEBSITE DESIG" progress={scrollProgress} typeRange={[0.22, 0.38]} eraseRange={[0.5, 0.64]} className="hero-heading" />
+            <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.68, 0.83]} className="viln-lockup" />
           </h1>
-        </FadeIn>
-      </div>
+        </div>
 
-      <FadeIn delay={0.6} y={30} className="absolute left-1/2 top-1/2 z-10 w-[280px] -translate-x-1/2 -translate-y-1/2 sm:bottom-0 sm:top-auto sm:w-[360px] sm:translate-y-0 md:w-[440px] lg:w-[520px]">
-        <Magnet>
-          <img src={portraitUrl} alt="VILN 3D creator" className="pointer-events-auto w-full object-contain" />
-        </Magnet>
-      </FadeIn>
-
-      <div className="mt-auto flex items-end justify-between gap-6 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
-        <FadeIn delay={0.35} y={20} className="max-w-[160px] sm:max-w-[220px] md:max-w-[260px]">
-          <p className="text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA]">We don&apos;t just build websites. We build businesses people can&apos;t ignore.</p>
-        </FadeIn>
-        <FadeIn delay={0.5} y={20}>
+        <motion.div className="absolute bottom-7 left-6 right-6 z-20 flex items-end justify-between gap-6 sm:bottom-8 md:bottom-10 md:left-10 md:right-10" style={{ opacity: supportOpacity }}>
+          <p className="max-w-[160px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA] sm:max-w-[220px] md:max-w-[260px]">We don&apos;t just build websites. We build businesses people can&apos;t ignore.</p>
           <ContactButton />
-        </FadeIn>
+        </motion.div>
       </div>
     </section>
   )
