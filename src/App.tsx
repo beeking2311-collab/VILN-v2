@@ -258,15 +258,15 @@ function MarqueeSection() {
 }
 
 function GrowthDiagram({ progress }: { progress: MotionValue<number> }) {
-  const systemOpacity = useTransform(progress, [0.76, 0.84], [0, 1])
-  const trunk = useTransform(progress, [0.83, 0.88], [0, 1])
-  const branches = useTransform(progress, [0.87, 0.92], [0, 1])
-  const outputs = useTransform(progress, [0.91, 0.96], [0, 1])
-  const advantage = useTransform(progress, [0.95, 1], [0, 1])
+  const systemOpacity = useTransform(progress, [0.93, 0.965], [0, 1])
+  const trunk = useTransform(progress, [0.95, 0.975], [0, 1])
+  const branches = useTransform(progress, [0.97, 0.99], [0, 1])
+  const outputs = useTransform(progress, [0.985, 0.998], [0, 1])
+  const advantage = useTransform(progress, [0.995, 1], [0, 1])
 
   return (
     <motion.div className="absolute inset-x-4 bottom-8 top-24 flex flex-col items-center justify-center text-center sm:inset-x-8 sm:top-28" style={{ opacity: systemOpacity }} aria-label="VILN growth system diagram">
-      <div className="pixel-type text-[clamp(0.75rem,2vw,1.4rem)] tracking-[0.14em] text-[#D7E2EA]">VILN</div>
+      <div className="pixel-type text-[clamp(0.75rem,2vw,1.4rem)] tracking-[0.14em] text-[#D7E2EA]">VILN®</div>
       <motion.div className="growth-line h-10 w-px origin-top sm:h-14" style={{ scaleY: trunk }} />
       <div className="relative w-full max-w-4xl">
         <motion.div className="growth-line absolute left-[16.66%] right-[16.66%] top-0 h-px origin-center" style={{ scaleX: branches }} />
@@ -315,11 +315,13 @@ function AboutSection() {
 
   const introOpacity = useTransform(scrollProgress, [0.08, 0.34, 0.46], [1, 1, 0])
   const introScale = useTransform(scrollProgress, [0.34, 0.46], [1, 0.96])
-  const questionOpacity = useTransform(scrollProgress, [0.46, 0.56, 0.67, 0.74], [0, 1, 1, 0])
+  const questionOpacity = useTransform(scrollProgress, [0.46, 0.55, 0.62, 0.64], [0, 1, 1, 0])
   const questionY = useTransform(scrollProgress, [0.46, 0.56], [24, 0])
-  const cursorOpacity = useTransform(scrollProgress, [0.59, 0.67], [0, 1])
-  const answerOpacity = useTransform(scrollProgress, [0.66, 0.78, 0.86], [0, 1, 0])
-  const answerY = useTransform(scrollProgress, [0.66, 0.78], [30, 0])
+  const cursorOpacity = useTransform(scrollProgress, [0.63, 0.72, 0.78], [0, 1, 0])
+  const answerOpacity = useTransform(scrollProgress, [0.7, 0.77, 0.82], [0, 1, 0])
+  const answerY = useTransform(scrollProgress, [0.7, 0.77], [30, 0])
+  const audienceOpacity = useTransform(scrollProgress, [0.79, 0.85, 0.94], [0, 1, 0])
+  const audienceY = useTransform(scrollProgress, [0.79, 0.85], [24, 0])
   const moonY = useTransform(scrollProgress, [0, 0.46], [0, -520])
   const moonRotate = useTransform(scrollProgress, [0, 0.46], [0, -22])
   const objectY = useTransform(scrollProgress, [0, 0.46], [0, -400])
@@ -359,11 +361,18 @@ function AboutSection() {
 
         <motion.div className="pixel-type absolute inset-x-5 top-1/2 z-20 flex -translate-y-1/2 flex-col items-center text-center text-[clamp(0.75rem,2.2vw,1.4rem)] leading-[2] tracking-[0.12em] text-[#D7E2EA]" style={{ opacity: questionOpacity, y: questionY }}>
           <span>SO WHAT ARE YOU?</span>
-          <motion.span className="cinematic-cursor mt-3 text-[#7F0012]" style={{ opacity: cursorOpacity }}>_</motion.span>
+        </motion.div>
+
+        <motion.div className="pixel-type absolute inset-x-5 top-1/2 z-20 -translate-y-1/2 text-center text-[clamp(1rem,2.5vw,1.55rem)] leading-[2] tracking-[0.12em] text-[#7F0012]" style={{ opacity: cursorOpacity }} aria-label="Thinking">
+          <span className="cinematic-cursor">_</span>
         </motion.div>
 
         <motion.div className="pixel-type absolute inset-x-5 top-1/2 z-20 -translate-y-1/2 text-center text-[clamp(0.75rem,2.2vw,1.4rem)] leading-[2] tracking-[0.12em] text-[#D7E2EA]" style={{ opacity: answerOpacity, y: answerY }}>
           A GROWTH SYSTEM.
+        </motion.div>
+
+        <motion.div className="pixel-type absolute inset-x-5 top-1/2 z-20 mt-16 -translate-y-1/2 text-center text-[clamp(0.55rem,1.4vw,0.9rem)] leading-[2] tracking-[0.1em] text-[#D7E2EA]/75" style={{ opacity: audienceOpacity, y: audienceY }}>
+          FOR PEOPLE BUILDING SOMETHING WORTH GROWING
         </motion.div>
 
         <GrowthDiagram progress={scrollProgress} />
