@@ -159,14 +159,23 @@ function AnimatedChar({ char, index, total, progress }: { char: string; index: n
   )
 }
 
-function AnimatedText({ text }: { text: string }) {
+function AnimatedText({ text, className = 'text-[#D7E2EA]' }: { text: string; className?: string }) {
   const ref = useRef<HTMLParagraphElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.8', 'end 0.2'] })
+  const lines = text.split('\n')
+  const totalCharacters = text.replace(/\n/g, '').length
+  let characterIndex = 0
 
   return (
-    <p ref={ref} className="max-w-[560px] text-center text-[clamp(1rem,2vw,1.35rem)] font-medium leading-relaxed text-[#D7E2EA]">
-      {text.split('').map((char, index) => (
-        <AnimatedChar key={`${char}-${index}`} char={char} index={index} total={text.length} progress={scrollYProgress} />
+    <p ref={ref} aria-label={text} className={`max-w-[560px] text-center text-[clamp(1rem,2vw,1.35rem)] font-medium leading-relaxed ${className}`}>
+      {lines.map((line, lineIndex) => (
+        <span key={`${line}-${lineIndex}`} className="block">
+          {line.split('').map((char) => {
+            const index = characterIndex
+            characterIndex += 1
+            return <AnimatedChar key={`${char}-${index}`} char={char} index={index} total={totalCharacters} progress={scrollYProgress} />
+          })}
+        </span>
       ))}
     </p>
   )
@@ -245,7 +254,7 @@ function MarqueeSection() {
 }
 
 function AboutSection() {
-  const aboutCopy = "With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!"
+  const aboutCopy = 'NOT AN AGENCY.\nNOT A DEVELOPMENT SHOP.\nNOT ANOTHER MARKETING COMPANY.'
 
   return (
     <section id="about" className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 py-20 sm:px-8 md:px-10" aria-labelledby="about-heading">
@@ -256,9 +265,9 @@ function AboutSection() {
 
       <div className="relative z-10 flex max-w-3xl flex-col items-center gap-10 text-center sm:gap-14 md:gap-16">
         <FadeIn y={40}>
-          <h2 id="about-heading" className="hero-heading text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight">About me</h2>
+          <h2 id="about-heading" className="hero-heading text-[clamp(3rem,7.55vw,114px)] font-black uppercase leading-none tracking-tight">who is VILN®</h2>
         </FadeIn>
-        <AnimatedText text={aboutCopy} />
+        <AnimatedText text={aboutCopy} className="text-[#7F0012]" />
         <FadeIn delay={0.2} y={20} className="mt-6 sm:mt-8 md:mt-10">
           <ContactButton />
         </FadeIn>
