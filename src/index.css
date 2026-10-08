@@ -73,7 +73,9 @@ a {
 }
 
 .cinematic-cursor {
-  animation: cinematic-blink 1.05s steps(2, start) infinite;
+  color: #ff0019;
+  text-shadow: 0 0 8px rgba(255, 0, 25, 0.95), 0 0 18px rgba(255, 0, 25, 0.5);
+  animation: cinematic-blink 2.4s steps(1, end) infinite;
 }
 
 .growth-line {
@@ -82,7 +84,14 @@ a {
 }
 
 @keyframes cinematic-blink {
-  50% {
+  0%,
+  68%,
+  100% {
+    opacity: 1;
+  }
+
+  72%,
+  88% {
     opacity: 0;
   }
 }

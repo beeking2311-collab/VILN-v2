@@ -317,11 +317,11 @@ function AboutSection() {
   const introScale = useTransform(scrollProgress, [0.34, 0.46], [1, 0.96])
   const questionOpacity = useTransform(scrollProgress, [0.46, 0.55, 0.62, 0.64], [0, 1, 1, 0])
   const questionY = useTransform(scrollProgress, [0.46, 0.56], [24, 0])
-  const cursorOpacity = useTransform(scrollProgress, [0.63, 0.72, 0.78], [0, 1, 0])
-  const answerOpacity = useTransform(scrollProgress, [0.7, 0.77, 0.82], [0, 1, 0])
+  const cursorOpacity = useTransform(scrollProgress, [0.63, 0.7, 0.74], [0, 1, 0])
+  const answerOpacity = useTransform(scrollProgress, [0.76, 0.8, 0.84], [0, 1, 0])
   const answerY = useTransform(scrollProgress, [0.7, 0.77], [30, 0])
-  const audienceOpacity = useTransform(scrollProgress, [0.79, 0.85, 0.94], [0, 1, 0])
-  const audienceY = useTransform(scrollProgress, [0.79, 0.85], [24, 0])
+  const audienceOpacity = useTransform(scrollProgress, [0.83, 0.87, 0.93], [0, 1, 0])
+  const audienceY = useTransform(scrollProgress, [0.83, 0.87], [24, 0])
   const moonY = useTransform(scrollProgress, [0, 0.46], [0, -520])
   const moonRotate = useTransform(scrollProgress, [0, 0.46], [0, -22])
   const objectY = useTransform(scrollProgress, [0, 0.46], [0, -400])
@@ -371,7 +371,7 @@ function AboutSection() {
           A GROWTH SYSTEM.
         </motion.div>
 
-        <motion.div className="pixel-type absolute inset-x-5 top-1/2 z-20 mt-16 -translate-y-1/2 text-center text-[clamp(0.55rem,1.4vw,0.9rem)] leading-[2] tracking-[0.1em] text-[#D7E2EA]/75" style={{ opacity: audienceOpacity, y: audienceY }}>
+        <motion.div className="pixel-type absolute inset-x-5 top-1/2 z-20 -translate-y-1/2 text-center text-[clamp(0.75rem,2.2vw,1.4rem)] leading-[2] tracking-[0.12em] text-[#D7E2EA]" style={{ opacity: audienceOpacity, y: audienceY }}>
           FOR PEOPLE BUILDING SOMETHING WORTH GROWING
         </motion.div>
 
