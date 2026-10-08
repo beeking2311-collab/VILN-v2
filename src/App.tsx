@@ -105,9 +105,9 @@ function ContactButton({ className = '' }: { className?: string }) {
   return (
     <a
       href="mailto:hello@jack3d.studio"
-      className={`contact-button inline-flex items-center gap-2 rounded-full bg-[linear-gradient(123deg,#18011F_7%,#B600A8_37%,#7621B0_72%,#BE4C00_100%)] px-8 py-3 text-xs font-medium uppercase tracking-[0.22em] text-white shadow-[0_4px_4px_rgba(181,1,167,0.25),4px_4px_12px_#7721B1_inset] outline outline-2 outline-white -outline-offset-[3px] transition-transform duration-300 hover:-translate-y-1 sm:px-10 sm:py-3.5 sm:text-sm md:px-12 md:py-4 md:text-base ${className}`}
+      className={`contact-button inline-flex items-center gap-2 rounded-full bg-[linear-gradient(123deg,#2D0008_7%,#FF0019_37%,#8F0013_72%,#FF5A48_100%)] px-8 py-3 text-xs font-medium uppercase tracking-[0.22em] text-white shadow-[0_4px_4px_rgba(255,0,25,0.25),4px_4px_12px_#8F0013_inset] outline outline-2 outline-white -outline-offset-[3px] transition-transform duration-300 hover:-translate-y-1 sm:px-10 sm:py-3.5 sm:text-sm md:px-12 md:py-4 md:text-base ${className}`}
     >
-      Contact Me <ArrowUpRight size={16} strokeWidth={1.6} />
+      Contact us <ArrowUpRight size={16} strokeWidth={1.6} />
     </a>
   )
 }
@@ -177,26 +177,29 @@ function HeroSection() {
     <section className="relative flex min-h-screen flex-col overflow-x-clip bg-[#0C0C0C]" aria-label="Hero">
       <FadeIn className="relative z-20 flex items-center justify-between gap-5 px-6 pt-6 text-sm font-medium uppercase tracking-wider text-[#D7E2EA] md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]" y={-20}>
         <a href="#about" className="transition-opacity duration-200 hover:opacity-70">About</a>
-        <a href="#services" className="transition-opacity duration-200 hover:opacity-70">Price</a>
+        <a href="#services" className="transition-opacity duration-200 hover:opacity-70">weapons</a>
         <a href="#projects" className="transition-opacity duration-200 hover:opacity-70">Projects</a>
         <a href="#contact" className="transition-opacity duration-200 hover:opacity-70">Contact</a>
       </FadeIn>
 
-      <div className="relative z-0 mt-6 overflow-hidden sm:mt-4 md:-mt-5">
+      <div className="relative z-0 mt-8 overflow-hidden sm:mt-6 md:mt-5">
         <FadeIn delay={0.15} y={40}>
-          <h1 className="hero-heading w-full whitespace-nowrap text-[14vw] font-black uppercase leading-none tracking-tight sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw]">Hi, i&apos;m jack</h1>
+          <h1 className="w-full whitespace-normal text-[clamp(4rem,10.6vw,160px)] font-black uppercase leading-[0.78] tracking-tight">
+            <span className="hero-heading block">Hi, we are</span>
+            <span className="viln-lockup block text-[1.18em]">VILN®</span>
+          </h1>
         </FadeIn>
       </div>
 
       <FadeIn delay={0.6} y={30} className="absolute left-1/2 top-1/2 z-10 w-[280px] -translate-x-1/2 -translate-y-1/2 sm:bottom-0 sm:top-auto sm:w-[360px] sm:translate-y-0 md:w-[440px] lg:w-[520px]">
         <Magnet>
-          <img src={portraitUrl} alt="Jack, 3D creator" className="pointer-events-auto w-full object-contain" />
+          <img src={portraitUrl} alt="VILN 3D creator" className="pointer-events-auto w-full object-contain" />
         </Magnet>
       </FadeIn>
 
       <div className="mt-auto flex items-end justify-between gap-6 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
         <FadeIn delay={0.35} y={20} className="max-w-[160px] sm:max-w-[220px] md:max-w-[260px]">
-          <p className="text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA]">a 3d creator driven by crafting striking and unforgettable projects</p>
+          <p className="text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA]">We don&apos;t just build websites. We build businesses people can&apos;t ignore.</p>
         </FadeIn>
         <FadeIn delay={0.5} y={20}>
           <ContactButton />

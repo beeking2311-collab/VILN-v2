@@ -55,6 +55,19 @@ a {
   -webkit-text-fill-color: transparent;
 }
 
+.hero-red-heading {
+  color: #ff0019;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #ff0019;
+}
+
+.viln-lockup {
+  color: #7f0012;
+  -webkit-text-fill-color: #7f0012;
+}
+
 .marquee-track {
   display: flex;
   width: max-content;
