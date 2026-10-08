@@ -147,21 +147,25 @@ function Magnet({ children, padding = 150, strength = 3 }: { children: ReactNode
   )
 }
 
-function AnimatedChar({ char, index, total, progress }: { char: string; index: number; total: number; progress: MotionValue<number> }) {
-  const opacity = useTransform(progress, [index / total, (index + 1) / total], [0.2, 1])
+function AnimatedChar({ char, index, total, progress, revealRange }: { char: string; index: number; total: number; progress: MotionValue<number>; revealRange: [number, number] }) {
+  const revealStart = revealRange[0] + ((revealRange[1] - revealRange[0]) * index) / total
+  const revealEnd = revealRange[0] + ((revealRange[1] - revealRange[0]) * (index + 1)) / total
+  const opacity = useTransform(progress, [revealStart, revealEnd], [0.12, 1])
+  const y = useTransform(progress, [revealStart, revealEnd], [8, 0])
   const display = char === ' ' ? '\u00a0' : char
 
   return (
     <span className="relative inline-block">
       <span className="invisible">{display}</span>
-      <motion.span className="absolute inset-0" style={{ opacity }} aria-hidden="true">{display}</motion.span>
+      <motion.span className="absolute inset-0" style={{ opacity, y }} aria-hidden="true">{display}</motion.span>
     </span>
   )
 }
 
-function AnimatedText({ text, className = 'text-[#D7E2EA]' }: { text: string; className?: string }) {
+function AnimatedText({ text, className = 'text-[#D7E2EA]', progress, revealRange = [0, 1] }: { text: string; className?: string; progress?: MotionValue<number>; revealRange?: [number, number] }) {
   const ref = useRef<HTMLParagraphElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.8', 'end 0.2'] })
+  const { scrollYProgress: localProgress } = useScroll({ target: ref, offset: ['start 0.8', 'end 0.2'] })
+  const activeProgress = progress ?? localProgress
   const lines = text.split('\n')
   const totalCharacters = text.replace(/\n/g, '').length
   let characterIndex = 0
@@ -173,7 +177,7 @@ function AnimatedText({ text, className = 'text-[#D7E2EA]' }: { text: string; cl
           {line.split('').map((char) => {
             const index = characterIndex
             characterIndex += 1
-            return <AnimatedChar key={`${char}-${index}`} char={char} index={index} total={totalCharacters} progress={scrollYProgress} />
+            return <AnimatedChar key={`${char}-${index}`} char={char} index={index} total={totalCharacters} progress={activeProgress} revealRange={revealRange} />
           })}
         </span>
       ))}
@@ -254,11 +258,11 @@ function MarqueeSection() {
 }
 
 function GrowthDiagram({ progress }: { progress: MotionValue<number> }) {
-  const systemOpacity = useTransform(progress, [0.58, 0.68], [0, 1])
-  const trunk = useTransform(progress, [0.67, 0.73], [0, 1])
-  const branches = useTransform(progress, [0.72, 0.79], [0, 1])
-  const outputs = useTransform(progress, [0.79, 0.87], [0, 1])
-  const advantage = useTransform(progress, [0.88, 0.96], [0, 1])
+  const systemOpacity = useTransform(progress, [0.76, 0.84], [0, 1])
+  const trunk = useTransform(progress, [0.83, 0.88], [0, 1])
+  const branches = useTransform(progress, [0.87, 0.92], [0, 1])
+  const outputs = useTransform(progress, [0.91, 0.96], [0, 1])
+  const advantage = useTransform(progress, [0.95, 1], [0, 1])
 
   return (
     <motion.div className="absolute inset-x-4 bottom-8 top-24 flex flex-col items-center justify-center text-center sm:inset-x-8 sm:top-28" style={{ opacity: systemOpacity }} aria-label="VILN growth system diagram">
@@ -309,24 +313,24 @@ function AboutSection() {
     }
   }, [scrollProgress])
 
-  const introOpacity = useTransform(scrollProgress, [0.18, 0.28, 0.36], [1, 0.35, 0])
-  const introScale = useTransform(scrollProgress, [0.18, 0.36], [1, 0.94])
-  const questionOpacity = useTransform(scrollProgress, [0.29, 0.4, 0.5, 0.58], [0, 1, 1, 0])
-  const questionY = useTransform(scrollProgress, [0.29, 0.4], [24, 0])
-  const cursorOpacity = useTransform(scrollProgress, [0.44, 0.5], [0, 1])
-  const answerOpacity = useTransform(scrollProgress, [0.5, 0.62, 0.7], [0, 1, 0])
-  const answerY = useTransform(scrollProgress, [0.5, 0.62], [30, 0])
-  const moonY = useTransform(scrollProgress, [0, 0.36], [0, -470])
-  const moonRotate = useTransform(scrollProgress, [0, 0.36], [0, -18])
-  const objectY = useTransform(scrollProgress, [0, 0.36], [0, -360])
-  const objectRotate = useTransform(scrollProgress, [0, 0.36], [0, 22])
-  const legoY = useTransform(scrollProgress, [0, 0.36], [0, -430])
-  const legoRotate = useTransform(scrollProgress, [0, 0.36], [0, 16])
-  const groupY = useTransform(scrollProgress, [0, 0.36], [0, -300])
-  const groupRotate = useTransform(scrollProgress, [0, 0.36], [0, -24])
+  const introOpacity = useTransform(scrollProgress, [0.08, 0.34, 0.46], [1, 1, 0])
+  const introScale = useTransform(scrollProgress, [0.34, 0.46], [1, 0.96])
+  const questionOpacity = useTransform(scrollProgress, [0.46, 0.56, 0.67, 0.74], [0, 1, 1, 0])
+  const questionY = useTransform(scrollProgress, [0.46, 0.56], [24, 0])
+  const cursorOpacity = useTransform(scrollProgress, [0.59, 0.67], [0, 1])
+  const answerOpacity = useTransform(scrollProgress, [0.66, 0.78, 0.86], [0, 1, 0])
+  const answerY = useTransform(scrollProgress, [0.66, 0.78], [30, 0])
+  const moonY = useTransform(scrollProgress, [0, 0.46], [0, -520])
+  const moonRotate = useTransform(scrollProgress, [0, 0.46], [0, -22])
+  const objectY = useTransform(scrollProgress, [0, 0.46], [0, -400])
+  const objectRotate = useTransform(scrollProgress, [0, 0.46], [0, 26])
+  const legoY = useTransform(scrollProgress, [0, 0.46], [0, -480])
+  const legoRotate = useTransform(scrollProgress, [0, 0.46], [0, 19])
+  const groupY = useTransform(scrollProgress, [0, 0.46], [0, -340])
+  const groupRotate = useTransform(scrollProgress, [0, 0.46], [0, -28])
 
   return (
-    <section id="about" ref={sectionRef} className="relative h-[620vh] bg-[#0C0C0C]" aria-labelledby="about-heading">
+    <section id="about" ref={sectionRef} className="relative h-[700vh] bg-[#0C0C0C]" aria-labelledby="about-heading">
       <div className="sticky top-0 h-screen overflow-hidden bg-[#0C0C0C]">
         <div className="absolute right-4 top-1/2 z-30 flex -translate-y-1/2 flex-col items-center gap-3 sm:right-8">
           <span className="pixel-type text-[0.45rem] tracking-[0.12em] text-[#7F0012]">SCROLL</span>
@@ -346,7 +350,7 @@ function AboutSection() {
             <FadeIn y={40}>
               <h2 id="about-heading" className="hero-heading text-[clamp(3rem,7.55vw,114px)] font-black uppercase leading-none tracking-tight">who is VILN®</h2>
             </FadeIn>
-            <AnimatedText text={aboutCopy} className="text-[#7F0012]" />
+            <AnimatedText text={aboutCopy} className="text-[#7F0012]" progress={scrollProgress} revealRange={[0.08, 0.32]} />
             <FadeIn delay={0.2} y={20} className="mt-6 sm:mt-8 md:mt-10">
               <ContactButton />
             </FadeIn>
