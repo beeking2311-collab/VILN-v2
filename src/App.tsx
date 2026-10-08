@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
+import { motion, useMotionValue, useScroll, useTransform, type MotionValue } from 'framer-motion'
 import { ArrowUpRight, MoveUpRight } from 'lucide-react'
 
 const portraitUrl = 'https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png'
@@ -253,24 +253,116 @@ function MarqueeSection() {
   )
 }
 
-function AboutSection() {
-  const aboutCopy = 'NOT AN AGENCY.\nNOT A DEVELOPMENT SHOP.\nNOT ANOTHER MARKETING COMPANY.'
+function GrowthDiagram({ progress }: { progress: MotionValue<number> }) {
+  const systemOpacity = useTransform(progress, [0.58, 0.68], [0, 1])
+  const trunk = useTransform(progress, [0.67, 0.73], [0, 1])
+  const branches = useTransform(progress, [0.72, 0.79], [0, 1])
+  const outputs = useTransform(progress, [0.79, 0.87], [0, 1])
+  const advantage = useTransform(progress, [0.88, 0.96], [0, 1])
 
   return (
-    <section id="about" className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 py-20 sm:px-8 md:px-10" aria-labelledby="about-heading">
-      <FadeIn delay={0.1} duration={0.9} x={-80} className="absolute left-[1%] top-[4%] w-[120px] sm:left-[2%] sm:w-[160px] md:left-[4%] md:w-[210px]"><img src={aboutImages.moon} alt="Moon shaped 3D icon" /></FadeIn>
-      <FadeIn delay={0.25} duration={0.9} x={-80} className="absolute bottom-[8%] left-[3%] w-[100px] sm:left-[6%] sm:w-[140px] md:left-[10%] md:w-[180px]"><img src={aboutImages.object} alt="Abstract 3D object" /></FadeIn>
-      <FadeIn delay={0.15} duration={0.9} x={80} className="absolute right-[1%] top-[4%] w-[120px] sm:right-[2%] sm:w-[160px] md:right-[4%] md:w-[210px]"><img src={aboutImages.lego} alt="Lego inspired 3D icon" /></FadeIn>
-      <FadeIn delay={0.3} duration={0.9} x={80} className="absolute bottom-[8%] right-[3%] w-[130px] sm:right-[6%] sm:w-[170px] md:right-[10%] md:w-[220px]"><img src={aboutImages.group} alt="Abstract 3D group" /></FadeIn>
+    <motion.div className="absolute inset-x-4 bottom-8 top-24 flex flex-col items-center justify-center text-center sm:inset-x-8 sm:top-28" style={{ opacity: systemOpacity }} aria-label="VILN growth system diagram">
+      <div className="pixel-type text-[clamp(0.75rem,2vw,1.4rem)] tracking-[0.14em] text-[#D7E2EA]">VILN</div>
+      <motion.div className="growth-line h-10 w-px origin-top sm:h-14" style={{ scaleY: trunk }} />
+      <div className="relative w-full max-w-4xl">
+        <motion.div className="growth-line absolute left-[16.66%] right-[16.66%] top-0 h-px origin-center" style={{ scaleX: branches }} />
+        <div className="grid grid-cols-3 gap-2 sm:gap-8">
+          {[
+            ['BUILD', 'WEBSITE'],
+            ['GROW', 'TRAFFIC'],
+            ['AUTOMATE', 'AI'],
+          ].map(([label, output]) => (
+            <div key={label} className="flex flex-col items-center">
+              <motion.div className="growth-line h-8 w-px origin-top sm:h-12" style={{ scaleY: branches }} />
+              <motion.div className="pixel-type text-[clamp(0.55rem,1.3vw,0.9rem)] tracking-[0.08em] text-[#D7E2EA]" style={{ opacity: branches }}>{label}</motion.div>
+              <motion.div className="growth-line h-6 w-px origin-top sm:h-10" style={{ scaleY: outputs }} />
+              <motion.div className="pixel-type text-[clamp(0.45rem,1vw,0.7rem)] tracking-[0.05em] text-[#7F0012]" style={{ opacity: outputs }}>{output}</motion.div>
+            </div>
+          ))}
+        </div>
+        <motion.div className="growth-line absolute bottom-[-2.5rem] left-[16.66%] right-[16.66%] h-px origin-center sm:bottom-[-3.5rem]" style={{ scaleX: advantage }} />
+      </div>
+      <motion.div className="growth-line mt-10 h-8 w-px origin-top sm:mt-14 sm:h-12" style={{ scaleY: advantage }} />
+      <motion.div className="pixel-type mt-2 text-[clamp(0.5rem,1.3vw,0.85rem)] tracking-[0.12em] text-[#D7E2EA]" style={{ opacity: advantage }}>UNFAIR ADVANTAGE</motion.div>
+    </motion.div>
+  )
+}
 
-      <div className="relative z-10 flex max-w-3xl flex-col items-center gap-10 text-center sm:gap-14 md:gap-16">
-        <FadeIn y={40}>
-          <h2 id="about-heading" className="hero-heading text-[clamp(3rem,7.55vw,114px)] font-black uppercase leading-none tracking-tight">who is VILN®</h2>
-        </FadeIn>
-        <AnimatedText text={aboutCopy} className="text-[#7F0012]" />
-        <FadeIn delay={0.2} y={20} className="mt-6 sm:mt-8 md:mt-10">
-          <ContactButton />
-        </FadeIn>
+function AboutSection() {
+  const aboutCopy = 'NOT AN AGENCY.\nNOT A DEVELOPMENT SHOP.\nNOT ANOTHER MARKETING COMPANY.'
+  const sectionRef = useRef<HTMLElement>(null)
+  const scrollProgress = useMotionValue(0)
+
+  useEffect(() => {
+    const updateProgress = () => {
+      const rect = sectionRef.current?.getBoundingClientRect()
+      if (!rect) return
+      const range = Math.max(1, rect.height - window.innerHeight)
+      scrollProgress.set(Math.min(1, Math.max(0, -rect.top / range)))
+    }
+    updateProgress()
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    window.addEventListener('resize', updateProgress)
+    return () => {
+      window.removeEventListener('scroll', updateProgress)
+      window.removeEventListener('resize', updateProgress)
+    }
+  }, [scrollProgress])
+
+  const introOpacity = useTransform(scrollProgress, [0.18, 0.28, 0.36], [1, 0.35, 0])
+  const introScale = useTransform(scrollProgress, [0.18, 0.36], [1, 0.94])
+  const questionOpacity = useTransform(scrollProgress, [0.29, 0.4, 0.5, 0.58], [0, 1, 1, 0])
+  const questionY = useTransform(scrollProgress, [0.29, 0.4], [24, 0])
+  const cursorOpacity = useTransform(scrollProgress, [0.44, 0.5], [0, 1])
+  const answerOpacity = useTransform(scrollProgress, [0.5, 0.62, 0.7], [0, 1, 0])
+  const answerY = useTransform(scrollProgress, [0.5, 0.62], [30, 0])
+  const moonY = useTransform(scrollProgress, [0, 0.36], [0, -470])
+  const moonRotate = useTransform(scrollProgress, [0, 0.36], [0, -18])
+  const objectY = useTransform(scrollProgress, [0, 0.36], [0, -360])
+  const objectRotate = useTransform(scrollProgress, [0, 0.36], [0, 22])
+  const legoY = useTransform(scrollProgress, [0, 0.36], [0, -430])
+  const legoRotate = useTransform(scrollProgress, [0, 0.36], [0, 16])
+  const groupY = useTransform(scrollProgress, [0, 0.36], [0, -300])
+  const groupRotate = useTransform(scrollProgress, [0, 0.36], [0, -24])
+
+  return (
+    <section id="about" ref={sectionRef} className="relative h-[620vh] bg-[#0C0C0C]" aria-labelledby="about-heading">
+      <div className="sticky top-0 h-screen overflow-hidden bg-[#0C0C0C]">
+        <div className="absolute right-4 top-1/2 z-30 flex -translate-y-1/2 flex-col items-center gap-3 sm:right-8">
+          <span className="pixel-type text-[0.45rem] tracking-[0.12em] text-[#7F0012]">SCROLL</span>
+          <div className="h-40 w-px overflow-hidden bg-white/10 sm:h-52">
+            <motion.div className="h-full w-full origin-top bg-[#7F0012]" style={{ scaleY: scrollProgress }} />
+          </div>
+          <motion.span className="pixel-type text-[0.45rem] tracking-[0.12em] text-[#D7E2EA]" style={{ opacity: scrollProgress }}>VILN</motion.span>
+        </div>
+
+        <motion.div className="absolute inset-0" style={{ opacity: introOpacity, scale: introScale }}>
+          <motion.div className="absolute left-[1%] top-[4%] w-[120px] sm:left-[2%] sm:w-[160px] md:left-[4%] md:w-[210px]" style={{ y: moonY, rotate: moonRotate }}><img src={aboutImages.moon} alt="Moon shaped 3D icon" /></motion.div>
+          <motion.div className="absolute bottom-[8%] left-[3%] w-[100px] sm:left-[6%] sm:w-[140px] md:left-[10%] md:w-[180px]" style={{ y: objectY, rotate: objectRotate }}><img src={aboutImages.object} alt="Abstract 3D object" /></motion.div>
+          <motion.div className="absolute right-[1%] top-[4%] w-[120px] sm:right-[2%] sm:w-[160px] md:right-[4%] md:w-[210px]" style={{ y: legoY, rotate: legoRotate }}><img src={aboutImages.lego} alt="Lego inspired 3D icon" /></motion.div>
+          <motion.div className="absolute bottom-[8%] right-[3%] w-[130px] sm:right-[6%] sm:w-[170px] md:right-[10%] md:w-[220px]" style={{ y: groupY, rotate: groupRotate }}><img src={aboutImages.group} alt="Abstract 3D group" /></motion.div>
+
+          <div className="relative z-10 flex h-screen flex-col items-center justify-center gap-10 px-5 text-center sm:gap-14 md:gap-16">
+            <FadeIn y={40}>
+              <h2 id="about-heading" className="hero-heading text-[clamp(3rem,7.55vw,114px)] font-black uppercase leading-none tracking-tight">who is VILN®</h2>
+            </FadeIn>
+            <AnimatedText text={aboutCopy} className="text-[#7F0012]" />
+            <FadeIn delay={0.2} y={20} className="mt-6 sm:mt-8 md:mt-10">
+              <ContactButton />
+            </FadeIn>
+          </div>
+        </motion.div>
+
+        <motion.div className="pixel-type absolute inset-x-5 top-1/2 z-20 flex -translate-y-1/2 flex-col items-center text-center text-[clamp(0.75rem,2.2vw,1.4rem)] leading-[2] tracking-[0.12em] text-[#D7E2EA]" style={{ opacity: questionOpacity, y: questionY }}>
+          <span>SO WHAT ARE YOU?</span>
+          <motion.span className="cinematic-cursor mt-3 text-[#7F0012]" style={{ opacity: cursorOpacity }}>_</motion.span>
+        </motion.div>
+
+        <motion.div className="pixel-type absolute inset-x-5 top-1/2 z-20 -translate-y-1/2 text-center text-[clamp(0.75rem,2.2vw,1.4rem)] leading-[2] tracking-[0.12em] text-[#D7E2EA]" style={{ opacity: answerOpacity, y: answerY }}>
+          A GROWTH SYSTEM.
+        </motion.div>
+
+        <GrowthDiagram progress={scrollProgress} />
       </div>
     </section>
   )

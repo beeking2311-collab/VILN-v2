@@ -68,6 +68,25 @@ a {
   -webkit-text-fill-color: #7f0012;
 }
 
+.pixel-type {
+  font-family: 'Press Start 2P', monospace;
+}
+
+.cinematic-cursor {
+  animation: cinematic-blink 1.05s steps(2, start) infinite;
+}
+
+.growth-line {
+  background: #7f0012;
+  box-shadow: 0 0 14px rgba(127, 0, 18, 0.28);
+}
+
+@keyframes cinematic-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 .marquee-track {
   display: flex;
   width: max-content;
