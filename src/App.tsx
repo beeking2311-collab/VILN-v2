@@ -272,22 +272,24 @@ function GrowthDiagram({ progress }: { progress: MotionValue<number> }) {
         <motion.div className="growth-line absolute left-[16.66%] right-[16.66%] top-0 h-px origin-center" style={{ scaleX: branches }} />
         <div className="grid grid-cols-3 gap-2 sm:gap-8">
           {[
-            ['BUILD', 'WEBSITE'],
-            ['GROW', 'TRAFFIC'],
-            ['AUTOMATE', 'AI'],
-          ].map(([label, output]) => (
+            ['BUILD', 'WEBSITE, ANIMATIONS & 3D MODELS', ''],
+            ['GROW', 'TRAFFIC [SEO, GEO, SMM]', 'visibility that compounds. content that lasts.'],
+            ['AUTOMATE', 'SYSTEMS & WORKFLOWS', 'less manual, more momentum'],
+          ].map(([label, output, note]) => (
             <div key={label} className="flex flex-col items-center">
               <motion.div className="growth-line h-8 w-px origin-top sm:h-12" style={{ scaleY: branches }} />
               <motion.div className="pixel-type text-[clamp(0.55rem,1.3vw,0.9rem)] tracking-[0.08em] text-[#D7E2EA]" style={{ opacity: branches }}>{label}</motion.div>
               <motion.div className="growth-line h-6 w-px origin-top sm:h-10" style={{ scaleY: outputs }} />
-              <motion.div className="pixel-type text-[clamp(0.45rem,1vw,0.7rem)] tracking-[0.05em] text-[#7F0012]" style={{ opacity: outputs }}>{output}</motion.div>
+              <motion.div className="pixel-type max-w-[10rem] text-[clamp(0.45rem,1vw,0.7rem)] leading-[1.5] tracking-[0.05em] text-[#7F0012]" style={{ opacity: outputs }}>{output}</motion.div>
+              {note && <motion.div className="mt-3 max-w-[12rem] text-[clamp(0.55rem,0.9vw,0.78rem)] font-light leading-[1.35] tracking-normal text-[#D7E2EA]/70" style={{ opacity: outputs }}>{note}</motion.div>}
+              <motion.div className="growth-line h-6 w-px origin-top sm:h-10" style={{ scaleY: outputs }} />
             </div>
           ))}
         </div>
         <motion.div className="growth-line absolute bottom-[-2.5rem] left-[16.66%] right-[16.66%] h-px origin-center sm:bottom-[-3.5rem]" style={{ scaleX: advantage }} />
       </div>
       <motion.div className="growth-line mt-10 h-8 w-px origin-top sm:mt-14 sm:h-12" style={{ scaleY: advantage }} />
-      <motion.div className="pixel-type mt-2 text-[clamp(0.5rem,1.3vw,0.85rem)] tracking-[0.12em] text-[#D7E2EA]" style={{ opacity: advantage }}>UNFAIR ADVANTAGE</motion.div>
+      <motion.div className="pixel-type mt-2 text-[clamp(0.5rem,1.3vw,0.85rem)] tracking-[0.12em] text-[#D7E2EA]" style={{ opacity: advantage }}>WE CREATE UNFAIR ADVANTAGE</motion.div>
     </motion.div>
   )
 }
