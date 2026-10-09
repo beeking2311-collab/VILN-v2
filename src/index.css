@@ -5,7 +5,7 @@
 :root {
   font-family: 'Kanit', sans-serif;
   color: #d7e2ea;
-  background: #0c0c0c;
+  background: #000000;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -17,7 +17,7 @@
 }
 
 html {
-  background: #0c0c0c;
+  background: #000000;
   scroll-behavior: smooth;
 }
 
@@ -26,7 +26,7 @@ body,
   min-width: 320px;
   min-height: 100vh;
   overflow-x: clip;
-  background: #0c0c0c;
+  background: #000000;
 }
 
 body {
@@ -44,7 +44,7 @@ a {
 }
 
 ::selection {
-  color: #0c0c0c;
+  color: #000000;
   background: #d7e2ea;
 }
 

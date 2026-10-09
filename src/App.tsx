@@ -263,9 +263,9 @@ function HeroSection() {
   const supportOpacity = useTransform(scrollProgress, [0.12, 0.24, 0.34], [1, 1, 0])
 
   return (
-    <section ref={sectionRef} className="relative h-[520vh] bg-[#0C0C0C]" aria-label="Pinned VILN hero sequence">
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#0C0C0C]">
-        <video ref={videoRef} className="absolute inset-0 h-full w-full object-contain" muted playsInline preload="auto" aria-label="VILN character expression and mask sequence">
+    <section ref={sectionRef} className="relative h-[520vh] bg-[#000000]" aria-label="Pinned VILN hero sequence">
+      <div className="sticky top-0 h-screen overflow-hidden bg-[#000000]">
+        <video ref={videoRef} className="absolute inset-0 h-full w-full scale-[0.86] object-contain" muted playsInline preload="auto" aria-label="VILN character expression and mask sequence">
           <source src={heroVideoUrl} type="video/mp4" />
         </video>
 
@@ -276,12 +276,17 @@ function HeroSection() {
           <a href="#contact" className="transition-opacity duration-200 hover:opacity-70">Contact</a>
         </FadeIn>
 
-        <div className="pointer-events-none absolute left-5 right-5 top-[23%] z-20 md:left-10 md:top-[20%]">
-          <h1 className="text-[clamp(3.4rem,8.8vw,132px)] font-black uppercase leading-[0.82] tracking-tight">
+        <div className="pointer-events-none absolute right-5 top-[13%] z-20 w-[min(68vw,620px)] text-right md:right-10 md:top-[15%]">
+          <h1 className="text-[clamp(2rem,4.6vw,5rem)] font-semibold uppercase leading-[0.88] tracking-[-0.045em]">
             <ScrollTypedLine text="HI, WE ARE" progress={scrollProgress} typeRange={[0.05, 0.18]} className="hero-heading" />
             <ScrollTypedLine text="A WEBSITE DESIG" progress={scrollProgress} typeRange={[0.22, 0.38]} eraseRange={[0.5, 0.64]} className="hero-heading" />
-            <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.68, 0.83]} className="viln-lockup" />
           </h1>
+        </div>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-[8%] z-20 text-center">
+          <h2 className="whitespace-nowrap text-[clamp(7rem,27vw,29rem)] font-black uppercase leading-[0.64] tracking-[-0.09em]">
+            <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.68, 0.83]} className="viln-lockup" />
+          </h2>
         </div>
 
         <motion.div className="absolute bottom-7 left-6 right-6 z-20 flex items-end justify-between gap-6 sm:bottom-8 md:bottom-10 md:left-10 md:right-10" style={{ opacity: supportOpacity }}>
@@ -321,7 +326,7 @@ function MarqueeSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="flex flex-col gap-3 bg-[#0C0C0C] pb-10 pt-24 sm:pt-32 md:pt-40" aria-label="Selected motion work">
+    <section ref={sectionRef} className="flex flex-col gap-3 bg-[#000000] pb-10 pt-24 sm:pt-32 md:pt-40" aria-label="Selected motion work">
       <MarqueeRow images={marqueeImages.slice(0, 11)} direction="right" offset={offset} />
       <MarqueeRow images={marqueeImages.slice(11)} direction="left" offset={offset} />
     </section>
@@ -405,8 +410,8 @@ function AboutSection() {
   const groupRotate = useTransform(scrollProgress, [0, 0.46], [0, -28])
 
   return (
-    <section id="about" ref={sectionRef} className="relative h-[700vh] bg-[#0C0C0C]" aria-labelledby="about-heading">
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#0C0C0C]">
+    <section id="about" ref={sectionRef} className="relative h-[700vh] bg-[#000000]" aria-labelledby="about-heading">
+      <div className="sticky top-0 h-screen overflow-hidden bg-[#000000]">
         <div className="absolute right-4 top-1/2 z-30 flex -translate-y-1/2 flex-col items-center gap-3 sm:right-8">
           <span className="pixel-type text-[0.45rem] tracking-[0.12em] text-[#7F0012]">SCROLL</span>
           <div className="h-40 w-px overflow-hidden bg-white/10 sm:h-52">
@@ -456,7 +461,7 @@ function AboutSection() {
 
 function ServicesSection() {
   return (
-    <section id="services" className="rounded-t-[40px] bg-white px-5 py-20 text-[#0C0C0C] sm:rounded-t-[50px] sm:px-8 sm:py-24 md:rounded-t-[60px] md:px-10 md:py-32" aria-labelledby="services-heading">
+    <section id="services" className="rounded-t-[40px] bg-white px-5 py-20 text-[#000000] sm:rounded-t-[50px] sm:px-8 sm:py-24 md:rounded-t-[60px] md:px-10 md:py-32" aria-labelledby="services-heading">
       <FadeIn y={40}>
         <h2 id="services-heading" className="mb-16 text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight sm:mb-20 md:mb-28">Services</h2>
       </FadeIn>
@@ -485,7 +490,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
 
   return (
     <div ref={cardRef} className="relative h-[85vh]">
-      <motion.article style={{ scale, top: index * 28 }} className="sticky z-10 flex h-[min(78vh,760px)] min-h-[520px] flex-col rounded-[40px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 text-[#D7E2EA] sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8">
+      <motion.article style={{ scale, top: index * 28 }} className="sticky z-10 flex h-[min(78vh,760px)] min-h-[520px] flex-col rounded-[40px] border-2 border-[#D7E2EA] bg-[#000000] p-4 text-[#D7E2EA] sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8">
         <div className="flex items-start justify-between gap-4 pb-5 sm:pb-7">
           <div className="flex min-w-0 items-start gap-4 sm:gap-6">
             <span className="text-[clamp(3rem,10vw,140px)] font-black leading-[0.7] tracking-tight">{project.number}</span>
@@ -511,7 +516,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
 
 function ProjectsSection() {
   return (
-    <section id="projects" className="relative z-10 -mt-10 rounded-t-[40px] bg-[#0C0C0C] px-5 pb-24 pt-20 sm:-mt-12 sm:rounded-t-[50px] sm:px-8 sm:pt-24 md:-mt-14 md:rounded-t-[60px] md:px-10 md:pt-32" aria-labelledby="projects-heading">
+    <section id="projects" className="relative z-10 -mt-10 rounded-t-[40px] bg-[#000000] px-5 pb-24 pt-20 sm:-mt-12 sm:rounded-t-[50px] sm:px-8 sm:pt-24 md:-mt-14 md:rounded-t-[60px] md:px-10 md:pt-32" aria-labelledby="projects-heading">
       <FadeIn y={40}>
         <h2 id="projects-heading" className="mb-16 text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight sm:mb-20 md:mb-28">Project</h2>
       </FadeIn>
@@ -529,7 +534,7 @@ function ProjectsSection() {
 
 export default function App() {
   return (
-    <main className="overflow-x-clip bg-[#0C0C0C] font-kanit">
+    <main className="overflow-x-clip bg-[#000000] font-kanit">
       <HeroSection />
       <MarqueeSection />
       <AboutSection />
