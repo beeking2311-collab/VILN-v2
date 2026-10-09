@@ -81,6 +81,13 @@ a {
   font-weight: 700;
 }
 
+.registered-glyph {
+  font-size: 0.34em;
+  line-height: 0;
+  margin-left: 0.06em;
+  vertical-align: super;
+}
+
 .pixel-type {
   font-family: 'Press Start 2P', monospace;
 }

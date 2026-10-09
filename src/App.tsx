@@ -196,8 +196,10 @@ function ScrollGlyph({ char, index, total, progress, typeRange, eraseRange, clas
   const y = useTransform(progress, [typeStart, typeEnd], [12, 0])
   const display = char === ' ' ? '\u00a0' : char
 
+  const isRegistered = char === '®'
+
   return (
-    <span className="relative inline-block">
+    <span className={`relative inline-block ${isRegistered ? 'registered-glyph' : ''}`}>
       <span className="invisible">{display}</span>
       <motion.span className={`absolute inset-0 ${className}`} style={{ opacity, y }} aria-hidden="true">{display}</motion.span>
     </span>
@@ -269,7 +271,7 @@ function HeroSection() {
   return (
     <section ref={sectionRef} className="relative h-[520vh] bg-[#000000]" aria-label="Pinned VILN hero sequence">
       <div className="sticky top-0 h-screen overflow-hidden bg-[#000000]">
-        <video ref={videoRef} className="absolute inset-0 h-full w-full scale-[0.86] object-contain" muted playsInline preload="auto" aria-label="VILN character expression and mask sequence">
+        <video ref={videoRef} className="absolute inset-0 mt-[47px] h-full w-full scale-[0.86] object-contain" muted playsInline preload="auto" aria-label="VILN character expression and mask sequence">
           <source src={heroVideoUrl} type="video/mp4" />
         </video>
 
@@ -287,8 +289,8 @@ function HeroSection() {
           </h1>
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 top-[28%] z-20 text-center">
-          <h2 className="whitespace-nowrap text-[clamp(6.5rem,23vw,25rem)] uppercase leading-[0.64] tracking-[-0.09em]">
+        <div className="pointer-events-none absolute inset-x-0 top-[30%] z-20 text-center">
+          <h2 className="whitespace-nowrap text-[clamp(5rem,34vw,36rem)] uppercase leading-[0.58] tracking-[-0.16em]">
             <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.68, 0.83]} className="viln-lockup human-type" />
           </h2>
         </div>
