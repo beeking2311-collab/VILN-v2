@@ -204,9 +204,9 @@ function ScrollGlyph({ char, index, total, progress, typeRange, eraseRange, clas
   )
 }
 
-function ScrollTypedLine({ text, progress, typeRange, eraseRange, className = '' }: { text: string; progress: MotionValue<number>; typeRange: [number, number]; eraseRange?: [number, number]; className?: string }) {
+function ScrollTypedLine({ text, progress, typeRange, eraseRange, className = '', wrap = false }: { text: string; progress: MotionValue<number>; typeRange: [number, number]; eraseRange?: [number, number]; className?: string; wrap?: boolean }) {
   return (
-    <span className="block whitespace-pre">
+    <span className={`block ${wrap ? 'whitespace-normal' : 'whitespace-pre'}`}>
       {text.split('').map((char, index) => <ScrollGlyph key={`${char}-${index}`} char={char} index={index} total={text.length} progress={progress} typeRange={typeRange} eraseRange={eraseRange} className={className} />)}
     </span>
   )
@@ -223,17 +223,21 @@ function HeroSection() {
     const syncVideo = (value: number) => {
       const video = videoRef.current
       if (!video || video.readyState < 1) return
-      const videoTime = value < 0.18
-        ? lerp(0.1, 0.9, value / 0.18)
-        : value < 0.38
-          ? lerp(0.9, 2.2, (value - 0.18) / 0.2)
+      const fullDuration = Number.isFinite(video.duration) ? video.duration : 8.041667
+      const finalFrame = Math.max(0, fullDuration - 0.04)
+      const videoTime = value < 0.32
+        ? lerp(0.1, 1.25, value / 0.32)
+        : value < 0.4
+          ? lerp(1.25, 2.35, (value - 0.32) / 0.08)
           : value < 0.5
-            ? lerp(2.2, 3, (value - 0.38) / 0.12)
+            ? lerp(2.35, 3, (value - 0.4) / 0.1)
             : value < 0.64
               ? lerp(3, 5.2, (value - 0.5) / 0.14)
               : value < 0.83
                 ? lerp(5.2, 6.5, (value - 0.64) / 0.19)
-                : 6.5
+                : value < 0.93
+                  ? lerp(6.5, finalFrame, (value - 0.83) / 0.1)
+                  : finalFrame
       video.pause()
       if (Math.abs(video.currentTime - videoTime) > 0.015) video.currentTime = videoTime
     }
@@ -260,7 +264,7 @@ function HeroSection() {
     }
   }, [scrollProgress])
 
-  const supportOpacity = useTransform(scrollProgress, [0.12, 0.24, 0.34], [1, 1, 0])
+  const endCopyOpacity = useTransform(scrollProgress, [0.92, 0.95], [0, 1])
 
   return (
     <section ref={sectionRef} className="relative h-[520vh] bg-[#000000]" aria-label="Pinned VILN hero sequence">
@@ -289,10 +293,12 @@ function HeroSection() {
           </h2>
         </div>
 
-        <motion.div className="absolute bottom-7 left-6 right-6 z-20 flex items-end justify-between gap-6 sm:bottom-8 md:bottom-10 md:left-10 md:right-10" style={{ opacity: supportOpacity }}>
-          <p className="max-w-[160px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA] sm:max-w-[220px] md:max-w-[260px]">We don&apos;t just build websites. We build businesses people can&apos;t ignore.</p>
+        <div className="absolute bottom-7 left-6 right-6 z-20 flex items-end justify-between gap-6 sm:bottom-8 md:bottom-10 md:left-10 md:right-10">
+          <motion.p className="max-w-[160px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA] sm:max-w-[220px] md:max-w-[260px]" style={{ opacity: endCopyOpacity }} aria-label="We don't just build websites. We build businesses people can't ignore.">
+            <ScrollTypedLine text="WE DON'T JUST BUILD WEBSITES. WE BUILD BUSINESSES PEOPLE CAN'T IGNORE." progress={scrollProgress} typeRange={[0.95, 0.995]} className="text-[#D7E2EA]" wrap />
+          </motion.p>
           <ContactButton />
-        </motion.div>
+        </div>
       </div>
     </section>
   )
