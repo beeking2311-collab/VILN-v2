@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Humane';
+  src: url('/fonts/Humane-Bold.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 :root {
   font-family: 'Kanit', sans-serif;
   color: #d7e2ea;
@@ -66,6 +74,11 @@ a {
 .viln-lockup {
   color: #7f0012;
   -webkit-text-fill-color: #7f0012;
+}
+
+.human-type {
+  font-family: 'Humane', 'Kanit', sans-serif;
+  font-weight: 700;
 }
 
 .pixel-type {

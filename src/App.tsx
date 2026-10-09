@@ -280,16 +280,16 @@ function HeroSection() {
           <a href="#contact" className="transition-opacity duration-200 hover:opacity-70">Contact</a>
         </FadeIn>
 
-        <div className="pointer-events-none absolute right-5 top-[13%] z-20 w-[min(68vw,620px)] text-right md:right-10 md:top-[15%]">
+        <div className="pointer-events-none absolute left-5 top-[13%] z-20 w-[min(68vw,620px)] text-left md:left-10 md:top-[15%]">
           <h1 className="text-[clamp(2rem,4.6vw,5rem)] font-semibold uppercase leading-[0.88] tracking-[-0.045em]">
             <ScrollTypedLine text="HI, WE ARE" progress={scrollProgress} typeRange={[0.05, 0.18]} className="hero-heading" />
             <ScrollTypedLine text="A WEBSITE DESIG" progress={scrollProgress} typeRange={[0.22, 0.38]} eraseRange={[0.5, 0.64]} className="hero-heading" />
           </h1>
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-[8%] z-20 text-center">
-          <h2 className="whitespace-nowrap text-[clamp(7rem,27vw,29rem)] font-black uppercase leading-[0.64] tracking-[-0.09em]">
-            <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.68, 0.83]} className="viln-lockup" />
+        <div className="pointer-events-none absolute inset-x-0 top-[28%] z-20 text-center">
+          <h2 className="whitespace-nowrap text-[clamp(6.5rem,23vw,25rem)] uppercase leading-[0.64] tracking-[-0.09em]">
+            <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.68, 0.83]} className="viln-lockup human-type" />
           </h2>
         </div>
 
