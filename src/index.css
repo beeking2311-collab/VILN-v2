@@ -63,6 +63,74 @@ a {
   -webkit-text-fill-color: transparent;
 }
 
+.hero-intro {
+  filter: drop-shadow(0 0 22px rgba(215, 226, 234, 0.08));
+}
+
+.hero-agency-shell {
+  clip-path: inset(0 0 0 0);
+}
+
+.hero-agency-copy {
+  color: #89929b;
+  -webkit-text-fill-color: #89929b;
+  text-shadow: 12px 0 0 rgba(255, 0, 25, 0.08);
+}
+
+.hero-glitch-shell {
+  color: #ff0019;
+  mix-blend-mode: screen;
+  overflow: hidden;
+  text-shadow: 3px 0 0 rgba(255, 255, 255, 0.55), -6px 0 0 rgba(255, 0, 25, 0.7);
+}
+
+.hero-glitch-text {
+  position: relative;
+  display: block;
+  animation: villain-glitch 0.16s steps(2, end) infinite;
+}
+
+.hero-glitch-text::before,
+.hero-glitch-text::after {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  content: attr(data-text);
+  pointer-events: none;
+}
+
+.hero-glitch-text::before {
+  color: #ff5a67;
+  clip-path: inset(8% 0 58% 0);
+  transform: translateX(-0.045em);
+  animation: villain-slice-a 0.13s steps(2, end) infinite alternate;
+}
+
+.hero-glitch-text::after {
+  color: #d7e2ea;
+  clip-path: inset(62% 0 14% 0);
+  transform: translateX(0.06em);
+  animation: villain-slice-b 0.11s steps(2, end) infinite alternate;
+}
+
+@keyframes villain-glitch {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  18% { transform: translateX(-0.04em); opacity: 0.68; }
+  36% { transform: translateX(0.08em); opacity: 0.92; }
+  58% { transform: translateX(-0.02em); opacity: 0.46; }
+  76% { transform: translateX(0.05em); opacity: 0.88; }
+}
+
+@keyframes villain-slice-a {
+  from { clip-path: inset(8% 0 58% 0); }
+  to { clip-path: inset(22% 0 42% 0); }
+}
+
+@keyframes villain-slice-b {
+  from { clip-path: inset(62% 0 14% 0); }
+  to { clip-path: inset(74% 0 4% 0); }
+}
+
 .hero-red-heading {
   color: #ff0019;
   background: none;
@@ -72,8 +140,9 @@ a {
 }
 
 .viln-lockup {
-  color: #7f0012;
-  -webkit-text-fill-color: #7f0012;
+  color: #9b0017;
+  -webkit-text-fill-color: #9b0017;
+  text-shadow: 0 0 24px rgba(155, 0, 23, 0.22), 0 0 72px rgba(255, 0, 25, 0.09);
 }
 
 .human-type {
@@ -131,6 +200,10 @@ a {
 }
 
 @media (max-width: 640px) {
+  .hero-agency-shell {
+    width: 96vw;
+  }
+
   .marquee-track img {
     width: 280px;
     height: 180px;

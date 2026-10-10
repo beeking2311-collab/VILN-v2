@@ -266,12 +266,15 @@ function HeroSection() {
     }
   }, [scrollProgress])
 
-  const endCopyOpacity = useTransform(scrollProgress, [0.92, 0.95], [0, 1])
+  const glitchOpacity = useTransform(scrollProgress, [0.43, 0.48, 0.56, 0.6], [0, 1, 0.92, 0])
+  const glitchX = useTransform(scrollProgress, [0.43, 0.48, 0.53, 0.6], [0, -10, 12, 0])
+  const glitchSkew = useTransform(scrollProgress, [0.43, 0.48, 0.53, 0.6], [0, -2.5, 3, 0])
+  const endCopyOpacity = useTransform(scrollProgress, [0.94, 0.97], [0, 1])
 
   return (
     <section ref={sectionRef} className="relative h-[520vh] bg-[#000000]" aria-label="Pinned VILN hero sequence">
       <div className="sticky top-0 h-screen overflow-hidden bg-[#000000]">
-        <video ref={videoRef} className="absolute inset-0 mt-[47px] h-full w-full scale-[0.86] object-contain" muted playsInline preload="auto" aria-label="VILN character expression and mask sequence">
+        <video ref={videoRef} className="absolute inset-0 mt-[76px] h-full w-full scale-[0.77] translate-y-[5%] object-contain" muted playsInline preload="auto" aria-label="VILN character expression and mask sequence">
           <source src={heroVideoUrl} type="video/mp4" />
         </video>
 
@@ -282,22 +285,34 @@ function HeroSection() {
           <a href="#contact" className="transition-opacity duration-200 hover:opacity-70">Contact</a>
         </FadeIn>
 
-        <div className="pointer-events-none absolute left-5 top-[13%] z-20 w-[min(68vw,620px)] text-left md:left-10 md:top-[15%]">
-          <h1 className="text-[clamp(2rem,4.6vw,5rem)] font-semibold uppercase leading-[0.88] tracking-[-0.045em]">
-            <ScrollTypedLine text="HI, WE ARE" progress={scrollProgress} typeRange={[0.05, 0.18]} className="hero-heading" />
-            <ScrollTypedLine text="A WEBSITE DESIG" progress={scrollProgress} typeRange={[0.22, 0.38]} eraseRange={[0.5, 0.64]} className="hero-heading" />
+        <div className="pointer-events-none absolute inset-x-0 top-[13%] z-20 px-5 text-center sm:top-[14%] md:top-[15%]">
+          <h1 className="hero-intro text-[clamp(2.25rem,6.6vw,7rem)] font-bold uppercase leading-[0.82] tracking-[-0.055em]">
+            <ScrollTypedLine text="HI, WE ARE" progress={scrollProgress} typeRange={[0.05, 0.19]} className="hero-heading" />
           </h1>
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 top-[30%] z-20 text-center">
-          <h2 className="whitespace-nowrap text-[clamp(5rem,34vw,36rem)] uppercase leading-[0.58] tracking-[-0.16em]">
-            <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.68, 0.83]} className="viln-lockup human-type" />
+        <div className="pointer-events-none absolute left-0 top-[27%] z-20 w-[min(82vw,900px)] overflow-hidden text-left sm:top-[28%] md:left-[-2%] md:top-[29%] md:w-[min(68vw,980px)]">
+          <div className="hero-agency-shell relative whitespace-nowrap text-[clamp(1.2rem,3.6vw,4.2rem)] font-semibold uppercase leading-[0.82] tracking-[-0.055em]">
+            <ScrollTypedLine text="A WEBSITE DESIGN AGENC..." progress={scrollProgress} typeRange={[0.23, 0.43]} eraseRange={[0.59, 0.73]} className="hero-agency-copy" />
+            <motion.span
+              className="hero-glitch-shell absolute inset-0 block"
+              style={{ opacity: glitchOpacity, x: glitchX, skewX: glitchSkew }}
+              aria-hidden="true"
+            >
+              <span className="hero-glitch-text" data-text="A WEBSITE DESIGN AGENC...">A WEBSITE DESIGN AGENC...</span>
+            </motion.span>
+          </div>
+        </div>
+
+        <div className="pointer-events-none absolute inset-x-0 top-[46%] z-20 text-center sm:top-[45%] md:top-[43%]">
+          <h2 className="whitespace-nowrap text-[clamp(8rem,43vw,46rem)] uppercase leading-[0.5] tracking-[-0.18em]">
+            <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.76, 0.9]} className="viln-lockup human-type" />
           </h2>
         </div>
 
         <div className="absolute bottom-7 left-6 right-6 z-20 flex items-end justify-between gap-6 sm:bottom-8 md:bottom-10 md:left-10 md:right-10">
           <motion.p className="max-w-[160px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA] sm:max-w-[220px] md:max-w-[260px]" style={{ opacity: endCopyOpacity }} aria-label="We don't just build websites. We build businesses people can't ignore.">
-            <ScrollTypedLine text="WE DON'T JUST BUILD WEBSITES. WE BUILD BUSINESSES PEOPLE CAN'T IGNORE." progress={scrollProgress} typeRange={[0.95, 0.995]} className="text-[#D7E2EA]" wrap />
+            <ScrollTypedLine text="WE DON'T JUST BUILD WEBSITES. WE BUILD BUSINESSES PEOPLE CAN'T IGNORE." progress={scrollProgress} typeRange={[0.97, 0.999]} className="text-[#D7E2EA]" wrap />
           </motion.p>
           <ContactButton />
         </div>
