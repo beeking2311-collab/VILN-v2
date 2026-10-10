@@ -285,14 +285,14 @@ function HeroSection() {
           <a href="#contact" className="transition-opacity duration-200 hover:opacity-70">Contact</a>
         </FadeIn>
 
-        <div className="pointer-events-none absolute inset-x-0 top-[13%] z-20 px-5 text-center sm:top-[14%] md:top-[15%]">
+        <div className="pointer-events-none absolute inset-x-0 top-[14%] z-20 px-5 text-center sm:top-[15%] md:top-[16%]">
           <h1 className="hero-intro text-[clamp(2.25rem,6.6vw,7rem)] font-bold uppercase leading-[0.82] tracking-[-0.055em]">
             <ScrollTypedLine text="HI, WE ARE" progress={scrollProgress} typeRange={[0.05, 0.19]} className="hero-heading" />
           </h1>
         </div>
 
-        <div className="pointer-events-none absolute left-0 top-[27%] z-20 w-[min(82vw,900px)] overflow-hidden text-left sm:top-[28%] md:left-[-2%] md:top-[29%] md:w-[min(68vw,980px)]">
-          <div className="hero-agency-shell relative whitespace-nowrap text-[clamp(1.2rem,3.6vw,4.2rem)] font-semibold uppercase leading-[0.82] tracking-[-0.055em]">
+        <div className="pointer-events-none absolute left-[-5%] top-[25%] z-20 w-[min(110vw,1500px)] overflow-hidden text-left sm:top-[26%] md:left-[-8%] md:top-[27%]">
+          <div className="hero-agency-shell relative whitespace-nowrap text-[clamp(2rem,7.2vw,8rem)] font-semibold uppercase leading-[0.78] tracking-[-0.07em]">
             <ScrollTypedLine text="A WEBSITE DESIGN AGENC..." progress={scrollProgress} typeRange={[0.23, 0.43]} eraseRange={[0.59, 0.73]} className="hero-agency-copy" />
             <motion.span
               className="hero-glitch-shell absolute inset-0 block"
@@ -304,8 +304,8 @@ function HeroSection() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 top-[46%] z-20 text-center sm:top-[45%] md:top-[43%]">
-          <h2 className="whitespace-nowrap text-[clamp(8rem,43vw,46rem)] uppercase leading-[0.5] tracking-[-0.18em]">
+        <div className="pointer-events-none absolute inset-x-0 top-[49%] z-20 text-center sm:top-[48%] md:top-[46%]">
+          <h2 className="whitespace-nowrap text-[clamp(9rem,50vw,54rem)] uppercase leading-[0.46] tracking-[-0.19em]">
             <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.76, 0.9]} className="viln-lockup human-type" />
           </h2>
         </div>
