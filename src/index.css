@@ -67,6 +67,16 @@ a {
   filter: drop-shadow(0 0 22px rgba(215, 226, 234, 0.08));
 }
 
+.hero-display {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', 'Arial Narrow', sans-serif;
+  font-weight: 900;
+  font-stretch: condensed;
+}
+
+.hero-video-layer {
+  mix-blend-mode: screen;
+}
+
 .hero-agency-shell {
   clip-path: inset(0 0 0 0);
 }
@@ -155,7 +165,7 @@ a {
   font-size: 0.34em;
   line-height: 0;
   margin-left: 0.04em;
-  top: -0.2em;
+  top: -0.28em;
   vertical-align: super;
 }
 

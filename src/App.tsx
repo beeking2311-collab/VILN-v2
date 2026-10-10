@@ -273,8 +273,8 @@ function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative h-[520vh] bg-[#000000]" aria-label="Pinned VILN hero sequence">
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#000000]">
-        <video ref={videoRef} className="absolute inset-0 mt-[76px] h-full w-full scale-[0.77] translate-y-[5%] object-contain" muted playsInline preload="auto" aria-label="VILN character expression and mask sequence">
+      <div className="sticky top-0 isolate h-screen overflow-hidden bg-[#000000]">
+        <video ref={videoRef} className="hero-video-layer absolute inset-0 z-20 mt-[76px] h-full w-full scale-[0.77] translate-y-[5%] object-contain" muted playsInline preload="auto" aria-label="VILN character expression and mask sequence">
           <source src={heroVideoUrl} type="video/mp4" />
         </video>
 
@@ -285,15 +285,15 @@ function HeroSection() {
           <a href="#contact" className="transition-opacity duration-200 hover:opacity-70">Contact</a>
         </FadeIn>
 
-        <div className="pointer-events-none absolute inset-x-0 top-[14%] z-20 px-5 text-center sm:top-[15%] md:top-[16%]">
+        <div className="pointer-events-none absolute inset-x-0 top-[14%] z-30 px-5 text-center sm:top-[15%] md:top-[16%]">
           <h1 className="hero-intro text-[clamp(2.25rem,6.6vw,7rem)] font-bold uppercase leading-[0.82] tracking-[-0.055em]">
             <ScrollTypedLine text="HI, WE ARE" progress={scrollProgress} typeRange={[0.05, 0.19]} className="hero-heading" />
           </h1>
         </div>
 
-        <div className="pointer-events-none absolute left-[-5%] top-[25%] z-20 w-[min(110vw,1500px)] overflow-hidden text-left sm:top-[26%] md:left-[-8%] md:top-[27%]">
-          <div className="hero-agency-shell relative whitespace-nowrap text-[clamp(2rem,7.2vw,8rem)] font-semibold uppercase leading-[0.78] tracking-[-0.07em]">
-            <ScrollTypedLine text="A WEBSITE DESIGN AGENC..." progress={scrollProgress} typeRange={[0.23, 0.43]} eraseRange={[0.59, 0.73]} className="hero-agency-copy" />
+        <div className="pointer-events-none absolute left-[-4%] top-[24%] z-10 w-[108vw] overflow-hidden text-left sm:top-[25%] md:left-[-7%] md:top-[25%]">
+          <div className="hero-agency-shell hero-display relative w-full text-[clamp(4.5rem,11vw,12rem)] uppercase leading-[0.72] tracking-[-0.065em]">
+            <ScrollTypedLine text="A WEBSITE DESIGN AGENC..." progress={scrollProgress} typeRange={[0.23, 0.43]} eraseRange={[0.59, 0.73]} className="hero-agency-copy" wrap />
             <motion.span
               className="hero-glitch-shell absolute inset-0 block"
               style={{ opacity: glitchOpacity, x: glitchX, skewX: glitchSkew }}
@@ -304,9 +304,9 @@ function HeroSection() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 top-[49%] z-20 text-center sm:top-[48%] md:top-[46%]">
-          <h2 className="whitespace-nowrap text-[clamp(9rem,50vw,54rem)] uppercase leading-[0.46] tracking-[-0.19em]">
-            <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.76, 0.9]} className="viln-lockup human-type" />
+        <div className="pointer-events-none absolute inset-x-0 top-[44%] z-10 text-center sm:top-[43%] md:top-[41%]">
+          <h2 className="hero-display whitespace-nowrap text-[clamp(10rem,58vw,62rem)] uppercase leading-[0.42] tracking-[-0.2em]">
+            <ScrollTypedLine text="VILN®" progress={scrollProgress} typeRange={[0.76, 0.9]} className="viln-lockup" />
           </h2>
         </div>
 
